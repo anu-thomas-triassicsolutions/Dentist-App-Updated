@@ -1,0 +1,348 @@
+<!DOCTYPE>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title>Book Appointment</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+	<style>
+body,
+html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+
+    }
+h1 {
+  font-family: Helvetica;
+  font-weight: bold;
+  color: Black;
+  font-size: 50px;
+}
+h4 {
+  font-family: Helvetica, Arial, sans-serif;
+  color: White;
+  text-size: 20%
+}
+h3 {
+  font-family: Helvetica, Arial, sans-serif;
+  color: White;
+   font-size: 26px;
+}
+  .hello-msg{
+    font-size: 18px;
+    color: black;
+    margin-right: 20px;
+  }
+  .my-nav{
+  height: 80px;
+  color: black;
+  }
+  .nav-padding{
+  padding: 50px;
+  }
+  .content-padding{
+  padding-left: 40px;
+  }
+  .new-padding{
+  padding-Top: 70px;
+  }
+  .button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+</style>
+
+</head>
+
+<body style="background-image: url({% static 'Booking appointment.png' %});">
+
+<!--Navbar Starts-->
+<div class="my-nav">
+<nav class="navbar navbar-expand-lg navbar-light bg-light my-nav nav-padding">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Home</a>
+      </li>
+
+       {% if user.is_authenticated %}
+        {% if user is not None and user.is_patient %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'profile_view' user.id %}">My Profile</a>
+      </li>
+        <li class="nav-item ">
+        <a class="nav-link" href="{% url 'patient_appointment' %}">Book Your Appoiment</a>
+      </li>
+        {% endif %}
+         <li class="nav-item active">
+        <a class="nav-link" href="{% url 'patient_profile_list' %}">Patient List</a>
+      </li>
+        {% else %}
+
+        <li class="nav-item active">
+        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+      </li>
+        {% endif %}
+    </ul>
+  </div>
+   {% if user.is_authenticated %}
+
+    <p style="color:black;"> Hai {{user.username}} ! &nbsp;&nbsp;
+
+
+        <a href="{% url 'logout' %}">Logout Here</a></p>
+
+  {% else %}
+
+  <a class="nav-link" href="{% url 'register_view' %}" style="color:black;">Register</a> &nbsp;&nbsp;
+  <a class="nav-link" href="{% url 'login_view' %}" style="color:black;">Login</a>
+  {% endif %}
+</nav>
+</div>
+
+<!--Navbar Ends-->
+
+<!--Content Starts-->
+
+<div class="container content-padding">
+    <div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+                    <br><br><br>
+					<center><h1 id="form-title" class="new-padding">BOOK YOUR APPOINTMENT</h1></center>
+				</div>
+				<center><p> TIME - 9:00AM TO 6 :00PM</p></center>
+				<div class=" justify-content-center form_container">
+					<form method="post" action="">
+						{% csrf_token %}
+
+<!--                      <div class="input-group mb-3">-->
+<!--							<div class="input-group-append">-->
+<!--								<span class="input-group-text"><i class="fas fa-user"></i></span>-->
+<!--							</div>-->
+<!--							<input type="text" class="form-control" placeholder="Full Name " name="full_name">-->
+<!--						</div>-->
+<!--                      <div class="input-group mb-3">-->
+<!--							<div class="input-group-append">-->
+<!--								<span class="input-group-text"><i class="fa fa-globe" aria-hidden="true"></i></span>-->
+<!--							</div>-->
+<!--							<input type="text" class="form-control" placeholder="Place " name="place">-->
+<!--						</div>-->
+<!--						<div class="input-group mb-2">-->
+<!--							<div class="input-group-append">-->
+<!--								<span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>-->
+<!--							</div>-->
+<!--							<input type="number" class="form-control" placeholder="Mobile Number" name="mobile">-->
+<!--						</div>-->
+<!--						<div class="input-group mb-2">-->
+<!--							<div class="input-group-append">-->
+<!--								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>-->
+<!--							</div>-->
+<!--							<input type="email" class="form-control" placeholder="Mail ID" name="email">-->
+<!--						</div>-->
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-calendar"></i></span>
+							</div>
+                             <input type="date" class="form-control" placeholder="Date" name="date">
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-clock"></i></span>
+							</div>
+							<input type="time" class="form-control"  placeholder="Time" name="time">
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fa fa-user-md" aria-hidden="true"></i></span>
+							</div>
+							<select name="doctor" class="form-control">-->
+								<option value="">Select Doctor</option>
+							   {% for doctor in doctors %}
+									<option value="{{ doctor.id }}">{{ doctor.username}}</option>
+							   {% endfor %}
+							 </select>
+						</div>
+				   		<div class="d-flex justify-content-center mt-3 login_container">
+                              <button type="submit" class="button" > Book Apponintment </button>
+				   		</div>
+
+					</form>
+				</div>
+
+					{% for message in messages %}
+					<p id="messages">{{message}}</p>
+					{% endfor %}
+
+			</div>
+		</div>
+	</div>
+
+
+
+<!--  <div class="row">-->
+
+<!--    <div class="col-sm-6" >-->
+<!--    </div>-->
+
+<!--    <div class="col-sm-6" >-->
+<!--      <form method="post" action="" class="content-padding">-->
+<!--        {% csrf_token %}-->
+<!--            <br>-->
+<!--        <center> <h1 style="color: Black;">  ADD MY PATIENT </h1> </center>-->
+<!--            <br>-->
+<!--           <center>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                   <input type="text" class="form-control" placeholder="Username" name="name">-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-list-ol" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                   <input type="number" class="form-control" placeholder="OP Number" name="op_number">-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-heart" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                   <input type="number" class="form-control" placeholder="Age" name="age">-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-address-book" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                  <textarea name="address" class="form-control" rows="4" cols="50" placeholder="Address here..."></textarea>-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                   <input type="email" class="form-control" placeholder="Email" id="email" name="email">-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-mobile" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                   <input type="number" class="form-control" placeholder="Mobile Number" id="phone" name="phone">-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-user-md" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                   <input type="text" class="form-control" placeholder="Disease 1" id="disease1" name="disease1">-->
+<!--               </div>-->
+<!--               <div class="input-group mb-2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <span class="input-group-text"><i class="fa fa-user-md" aria-hidden="true"></i></span>-->
+<!--                    </div>-->
+<!--                    <input type="text" class="form-control" id="disease2" placeholder="Disease 2" name="disease2">-->
+<!--               </div>-->
+<!--               <div class="form-group">-->
+<!--               <div class="input-group mb-2">-->
+<!--                <div class="input-group-append">-->
+<!--                     <span class="input-group-text"><i class="fa fa-sticky-note" aria-hidden="true" ></i></span>-->
+<!--                </div>-->
+<!--                  <textarea name="prescription1" class="form-control" rows="4" cols="50" placeholder="Prescription here..."></textarea>-->
+<!--               </div>-->
+<!--                  <div class="col-sm-offset-2 col-sm-10">-->
+<!--                    <button type="submit" class="button" >Submit</button>-->
+<!--                  </div>-->
+<!--               </div>-->
+<!--           </center>-->
+<!--       </form>-->
+
+<!--    </div>-->
+
+<!--  </div>-->
+
+</div>
+
+<!--Content Ends-->
+
+<!--Footer Starts-->
+<footer class="bg-light text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #3b5998;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #55acee;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #dd4b39;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #ac2bac;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #0082ca;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+      <!-- Github -->
+
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">TriassicSolutions.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer Ends-->
+
+</body>
+</html>

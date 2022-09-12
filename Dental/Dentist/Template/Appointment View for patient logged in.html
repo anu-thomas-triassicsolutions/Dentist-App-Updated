@@ -1,0 +1,208 @@
+<!DOCTYPE>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title>All appointments</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+	<style>
+body,
+html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+
+    }
+h1 {
+  font-family: Helvetica;
+  font-weight: bold;
+  color: Black;
+  font-size: 50px;
+}
+h4 {
+  font-family: Helvetica, Arial, sans-serif;
+  color: White;
+  text-size: 20%
+}
+h3 {
+  font-family: Helvetica, Arial, sans-serif;
+  color: Black;
+   font-size: 26px;
+}
+  .hello-msg{
+    font-size: 18px;
+    color: black;
+    margin-right: 20px;
+  }
+  .my-nav{
+  height: 80px;
+  color: black;
+  }
+  .nav-padding{
+  padding: 50px;
+  }
+  .content-padding{
+  padding-left: 40px;
+   padding-right: 40px;
+  padding-bottom: 300px;
+   padding-top: 20px;
+  }
+  .new-padding{
+  padding-Top: 70px;
+  }
+  .button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+</style>
+
+</head>
+
+<body style="background-image: url({% static 'Booking appointment.png' %});">
+
+<!--Navbar Starts-->
+  {% if user.is_authenticated %}
+<div class="my-nav ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light my-nav nav-padding">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'dentist_home' %}">Home</a>
+          </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="{% url 'messages' %}">Messages</a>
+          </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="{% url 'appointment_list' %}">My Appointments</a>
+          </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="{% url 'patient_list' %}">Patient List</a>
+          </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="{% url 'patient_data' %}"> Add Patient</a>
+          </li>
+        </ul>
+      </div>
+
+
+        <a href="{% url 'logout' %}">Logout</a>&nbsp;
+ Hello {{user.username}} &nbsp;&nbsp;
+      {% endif %}
+
+    </nav>
+</div>
+
+<!--Navbar Ends-->
+
+<!--Content Starts-->
+<div class="container content-padding">
+<center><h1> ALL APPOINTMENTS </h1></center>
+<div class="row content-padding">
+
+{% for appointment in appointments %}
+<div class="col-sm-4 justify-content-center">
+<br>
+<div class="card justify-content-center">
+    <div class="card-body">
+
+
+
+      <h3 class="card-title"><center>{{appointment.created_on|date:'d M Y'}} </center></h3>
+       <p class="card-text"><center> Time : {{appointment.created_at}}<br>Disease : {{appointment.disease}}<br>
+      Improvement :{{appointment.improvement}}
+     Prescription : {{appointment.prescription}}</center></p>
+
+
+  </div>
+</div>
+</div>
+{% endfor %}
+
+
+</div>
+</div>
+<!--Content Ends-->
+
+<!--Footer Starts-->
+<footer class="bg-light text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #3b5998;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #55acee;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #dd4b39;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #ac2bac;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a
+        class="btn btn-primary btn-floating m-1"
+        style="background-color: #0082ca;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+      <!-- Github -->
+
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">TriassicSolutions.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer Ends-->
+
+</body>
+</html>
+>
